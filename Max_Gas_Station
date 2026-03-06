@@ -1,0 +1,199 @@
+// Best Approach
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+#define fast_io ios_base::sync_with_stdio(false); cin.tie(NULL);
+#define error cout << "Hare Krishna" << endl;
+
+double ispossible(vector<int>& arr, double& mid, int& n) {
+    double count = 0;
+
+    for(int i = 0; i < n - 1; i++) {
+        double needed = (arr[i+1] - arr[i]) / mid;
+
+        if(fmod((arr[i+1] - arr[i]),mid) == 0) needed--;
+
+        count += needed;
+    }
+
+    return count;
+}
+
+long double minimiseMaxDistance(vector<int>& arr, int k) {
+    int n = arr.size();
+    
+    int low = 0;
+    int high = 1e6;
+    for(int i = 0; i < 100; i++) {
+        double mid = (low + high) / 2.0;
+
+        int minstation = ispossible(arr, mid, n);
+        
+        if(minstation > k) {
+            high = mid;
+        }
+        else low = mid;
+    }
+
+    return high;
+}
+
+int main() {
+    fast_io;
+    int k, n;
+    cin >> k >> n;
+    vector<int> arr(n);
+    for(int i = 0; i < n; i++) cin >> arr[i];
+
+    cout << minimiseMaxDistance(arr, k) <<endl;
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Better Approach
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// #define ll long long
+// #define fast_io ios_base::sync_with_stdio(false); cin.tie(NULL);
+// #define error cout << "Hare Krishna" << endl;
+
+// long double minimiseMaxDistance(vector<int>& arr, int k) {
+//     int n = arr.size();
+//     vector<int> howmany(n-1, 0);
+//     priority_queue<pair<double, int>> pq;
+
+//     for(int i = 0; i < n - 1; i++)  pq.push({arr[i+1] - arr[i], i});
+    
+
+//     for(int i = 1; i <= k; i++) {
+//         int maxidx = -1;
+//         int maxlength = -1;
+
+//         int maxsection = pq.top().first;
+//         int maxidx = pq.top().second;
+//         pq.pop();
+
+//         int val = maxsection / (howmany[maxidx] + 1.0);
+//         pq.push({val, i});
+//         howmany[maxidx]++;
+//     }
+
+//     return pq.top().first;
+// }
+
+// int main() {
+//     fast_io;
+//     int k, n;
+//     cin >> k >> n;
+//     vector<int> arr(n);
+//     for(int i = 0; i < n; i++) cin >> arr[i];
+
+//     cout << minimiseMaxDistance(arr, k) <<endl;
+//     return 0;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Brute Force
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// #define ll long long
+// #define fast_io ios_base::sync_with_stdio(false); cin.tie(NULL);
+// #define error cout << "Hare Krishna" << endl;
+
+// long double minimiseMaxDistance(vector<int>& arr, int k) {
+//     int n = arr.size();
+//     vector<int> howmany(n-1, 0);
+
+//     for(int i = 1; i <= k; i++) {
+//         int maxidx = -1;
+//         int maxlength = -1;
+//         for(int j = 0; j < n - 1; j++) {
+//             int sectionlength = (arr[j+1] - arr[j]) / (howmany[j] + 1.0);
+
+//             if(sectionlength > maxlength) {
+//                 maxlength = sectionlength;
+//                 maxidx = i;
+//             }
+//         }
+//         howmany[maxidx]++;
+//     }
+
+//     double ans = -1;
+//     for(int i = 0; i < n - 1; i++) {
+//         ans = max(ans, ((arr[i+1] - arr[i]) / (howmany[i] + 1.0)));
+//     }
+
+//     return ans;
+// }
+
+// int main() {
+//     fast_io;
+//     int k, n;
+//     cin >> k >> n;
+//     vector<int> arr(n);
+//     for(int i = 0; i < n; i++) cin >> arr[i];
+
+//     cout << minimiseMaxDistance(arr, k) <<endl;
+//     return 0;
+// }
