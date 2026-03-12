@@ -19,18 +19,22 @@ void solve() {
     vector<int> a(n);
     for(int i = 0; i < n; i++) cin >> a[i];
 
-    vector<vector<int>> dp(n+2, vector<int> (2, 0));
+    vector<int> curr(2, 0);
+    vector<int> next2(2, 0);
+    vector<int> next1(2, 0);
 
     for(int i = n - 1; i >= 0; i--) {
         for(int dost = 0; dost < 2; dost++) {
-            int one = ((a[i] == 1 && dost) ? 1 : 0) +  dp[i+1][!dost];
-            int two = ((a[i] == 1 && dost) ? 1 : 0) + ((i + 1 < n && a[i+1] && dost) == 1 ? 1 : 0) + dp[i+2][!dost];
+            int one = ((a[i] == 1 && dost) ? 1 : 0) +  next1[!dost];
+            int two = ((a[i] == 1 && dost) ? 1 : 0) + ((i + 1 < n && a[i+1] && dost) == 1 ? 1 : 0) + next2[!dost];
 
-            dp[i][dost] = min(one, two);
+            curr[dost] = min(one, two);
         }
+        next2 = next1;
+        next1 = curr;
     }
 
-    int count = dp[0][1];
+    int count = next1[1];
 
     cout << count << endl;
 }
