@@ -20,7 +20,7 @@ void solve() {
 
     ll count = 0;
 
-    vector<int> prefix(n-1, 1);
+    vector<ll> prefix(n-1, 1);
 
     for(int j = 0; j < k; j++) {
         if(j == 0) {
