@@ -1,0 +1,28 @@
+Rabin-Carp Algorithm
+
+String Matching
+Rabin-Carp/ KMP/ Tries
+
+
+KMP Algorithm :
+We've 2 strings s and p. 
+s.length() >= p.length().
+We need to check iif p is there in s or not.
+So yeah, We make a new string p + "#" + s.
+New Vector<int> LPS();
+
+Now we start, Iterating the new string say str. we always ask our previous idx how much a particular
+substring is matching to p. Then we check is current idx is matching to lps[i-1] index on p. If yes, we increase
+lps[i] as lps[i-1] + 1; else we go back to check at what index it can match at max using a while loop.
+
+Here 2 cases occur, whether we found a match down the line or not.
+if not then we assign lps[i] as prev_idx means equal to 0 (after while loop prev_idx will become zero if we dont find any match down the line).
+else we add 1 to lps[matching_idx down the line].
+
+The while loop will be :
+while(prev_idx > 0 (because this will reset everything) && s[i] != s[prev_idx] (This is what we need to eliminate)) {
+    prev_idx = lps[prev_idx-1];
+}
+
+This constructs our lps vector.
+Now we need to check if our lps vector have a value equal to p.length() at any instance if yes, then Answer is true else false.
